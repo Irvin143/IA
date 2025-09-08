@@ -35,7 +35,8 @@ def manhattan(estado):
         for columna in range(3):
             valor = estado[fila][columna]
             if valor != 0:
-                meta_fila, meta_columna = divmod(valor-1, 3)
+                meta_fila = (valor - 1) // 3
+                meta_columna = (valor - 1) % 3
                 distancia += abs(fila - meta_fila) + abs(columna - meta_columna)
     return distancia
 
@@ -56,7 +57,7 @@ def estado_a_tupla(estado):
 def astar(inicio):
     heap = []
     heapq.heappush(heap, (manhattan(inicio), 0, inicio, []))
-    visitados = set()
+    visitados = []
     while heap:
         f, g, actual, camino = heapq.heappop(heap)
         if actual == ESTADO_META:
@@ -64,13 +65,12 @@ def astar(inicio):
         est = estado_a_tupla(actual)
         if est in visitados:
             continue
-        visitados.add(est)
+        visitados.append(est)
         for vecino in vecinos(actual):
             if estado_a_tupla(vecino) not in visitados:
                 heapq.heappush(heap, (g+1+manhattan(vecino), g+1, vecino, camino + [actual]))
     return None
 
-# --- Interfaz Gráfica ---
 
 class Puzzle8GUI:
     def __init__(self, master):
@@ -82,6 +82,7 @@ class Puzzle8GUI:
             [7, 5, 8]
         ]
         self.botones = [[None]*3 for _ in range(3)]
+        self.etiqueta_movimientos = None
         self.crear_widgets()
         self.actualizar_botones()
 
@@ -101,6 +102,14 @@ class Puzzle8GUI:
                 btn.grid(row=fila, column=columna)
                 self.botones[fila][columna] = btn
                 
+        
+        self.etiqueta_movimientos = tk.Label(
+            self.master,
+            text="Movimientos: 0",
+            font=("Arial", 14)
+        )
+        self.etiqueta_movimientos.pack(pady=10)
+
         ctk.CTkButton(
             self.master,
             text="Resolver",
@@ -123,7 +132,8 @@ class Puzzle8GUI:
             width=180,
             height=40,
             command=self.mezclar
-        ).pack(pady=5)
+        ).pack(pady=10)
+
 
     def actualizar_botones(self):
         for fila in range(3):
@@ -155,7 +165,8 @@ class Puzzle8GUI:
             if idx < len(solucion):
                 self.estado = solucion[idx]
                 self.actualizar_botones()
-                self.master.after(400, lambda: paso(idx+1))
+                self.etiqueta_movimientos['text'] = f"Movimientos: {idx}"
+                self.master.after(250, lambda: paso(idx+1))
             else:
                 messagebox.showinfo("Resuelto", "Puzzle resuelto con A*.")
         paso(0)
