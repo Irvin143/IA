@@ -10,7 +10,7 @@ El objetivo principal es resolver el rompecabezas utilizando el **algoritmo de b
 
 ## Imagenes
 <img width="209" height="379" alt="Image" src="https://github.com/user-attachments/assets/6a746d6e-c1f1-4fbd-a568-e8541191a584" />
-
+<img width="215" height="385" alt="Image" src="https://github.com/user-attachments/assets/5269ca85-f0da-4e19-b5db-383459387dea" />
 
 
 
