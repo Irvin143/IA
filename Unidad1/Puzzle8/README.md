@@ -43,7 +43,7 @@ El objetivo principal es resolver el rompecabezas utilizando el **algoritmo de b
 - manhattan: Calcula la distancia Manhattan como heurística para el algoritmo A*.
 - vecinos: Genera todos los posibles estados vecinos moviendo la casilla vacía.
 - estado_a_tupla: Convierte el tablero en tuplas para poder guardarlos como visitados.
-- astar: Implementa el algoritmo de búsqueda A* para encontrar la solución más corta.
+- astar: Implementa el algoritmo de búsqueda A* para encontrar la solución más corta.  
 **Clase Puzzle8GUI (Interfaz grafica)**
 - crear_widgets: Crea botones del tablero y controles.
 - actualizar_botones: Refresca los valores mostrados en los botones.
