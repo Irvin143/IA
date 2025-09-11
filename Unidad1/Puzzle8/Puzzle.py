@@ -11,14 +11,12 @@ ESTADO_META = [
     [7, 8, 0]
 ]
 
+#Encontrar la posición del cero en el estado, el cuadro vacío
 def encontrar_cero(estado):
     for fila in range(3):
         for columna in range(3):
             if estado[fila][columna] == 0:
                 return fila, columna
-
-def copiar_estado(estado):
-    return [fila[:] for fila in estado]
 
 def es_resoluble(estado):
     plano = sum(estado, [])
@@ -29,6 +27,7 @@ def es_resoluble(estado):
                 conteo_inversiones += 1
     return conteo_inversiones % 2 == 0
 
+#Función heurística: distancia Manhattan, para sacar el costo de cada estado
 def manhattan(estado):
     distancia = 0
     for fila in range(3):
@@ -40,38 +39,40 @@ def manhattan(estado):
                 distancia += abs(fila - meta_fila) + abs(columna - meta_columna)
     return distancia
 
+#Guarda los vecinos del estado actual
 def vecinos(estado):
     fila_cero, columna_cero = encontrar_cero(estado)
     movimientos = []
     for df, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
-        nueva_fila, nueva_columna = fila_cero+df, columna_cero+dc
-        if 0 <= nueva_fila < 3 and 0 <= nueva_columna < 3:
-            nuevo_estado = copiar_estado(estado)
+        nueva_fila, nueva_columna = fila_cero+df, columna_cero+dc #Se guarda la nueva posición del cero
+        if 0 <= nueva_fila < 3 and 0 <= nueva_columna < 3: #Verifica que la nueva posición esté dentro de los límites
+            nuevo_estado = [fila[:] for fila in estado]
             nuevo_estado[fila_cero][columna_cero], nuevo_estado[nueva_fila][nueva_columna] = nuevo_estado[nueva_fila][nueva_columna], nuevo_estado[fila_cero][columna_cero]
             movimientos.append(nuevo_estado)
     return movimientos
 
+#Convierte el estado(matriz) a una tupla
 def estado_a_tupla(estado):
     return tuple(tuple(fila) for fila in estado)
 
 def astar(inicio):
-    heap = []
-    heapq.heappush(heap, (manhattan(inicio), 0, inicio, []))
+    estadoActual = []  # Es una lista que se usa como cola de prioridad, guarda todas las posibles soluciones
+    heapq.heappush(estadoActual, (manhattan(inicio), 0, inicio, []))  # Agrega el primer elemento a la lista, que es el estado inicial
     visitados = []
-    while heap:
-        f, g, actual, camino = heapq.heappop(heap)
+    while estadoActual:  # Mientras la lista no este vacia
+        f, g, actual, camino = heapq.heappop(estadoActual)  # Elimina el elemento con menor costo(f) y elimina los demas
         if actual == ESTADO_META:
-            return camino + [actual]
+            return camino + [actual]  # Camino es la lista con todo su recorrido hasta llegar al estado meta
         est = estado_a_tupla(actual)
         if est in visitados:
             continue
         visitados.append(est)
         for vecino in vecinos(actual):
             if estado_a_tupla(vecino) not in visitados:
-                heapq.heappush(heap, (g+1+manhattan(vecino), g+1, vecino, camino + [actual]))
+                heapq.heappush(estadoActual, (g+1+manhattan(vecino), g+1, vecino, camino + [actual]))  # Agrega los vecinos del estado actual a la lista
     return None
 
-
+#INTERFAZ GRÁFICA
 class Puzzle8GUI:
     def __init__(self, master):
         self.master = master
