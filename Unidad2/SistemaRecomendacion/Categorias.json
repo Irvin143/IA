@@ -1,0 +1,22 @@
+[
+    {
+        "nombre": "Plato Fuerte",
+        "sabores": ["Salado", "Picoso", "Umami", "Ahumado", "Herbáceo", "Jugoso", "Quesoso", "Graso", "Fresco"]
+    },
+    {
+        "nombre": "Postre",
+        "sabores": ["Dulce", "Cremoso", "Crujiente", "Aromático", "Frio", "Caramelo", "Refrescante", "Caliente", "Amargo"]
+    },
+    {
+        "nombre": "Bebida",
+        "sabores": ["Ácida", "Refrescante", "Dulce", "Amargo", "Efervescente", "Caliente", "Fría", "Aromático", "Cremoso"]
+    },
+    {
+        "nombre": "Entrada",
+        "sabores": ["Cremoso", "Salado", "Fresco", "Ácido", "Quesoso", "Graso", "Crujiente", "Picoso", "Herbáceo", "Jugoso", "Aromático", "Picante", "Caliente"]
+    },
+    {
+        "nombre": "Restricciones",
+        "sabores": ["Vegano", "gluten", "lácteos"]
+    }
+]

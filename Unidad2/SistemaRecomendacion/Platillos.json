@@ -1,0 +1,124 @@
+
+
+[
+    {"nombre": "Tacos al Pastor", "categoria": "Plato Fuerte", "sabores": ["Picoso", "Salado", "Ahumado", "Jugoso"], 
+    "ingredientes": ["Cerdo", "Piña", "Tortilla de maíz", "Cebolla", "Cilantro"], 
+    "preparacion": "Asado", 
+    "restricciones": ["No vegano", "Contiene gluten"], 
+    "popularidad": 0.85},
+
+    {"nombre": "Enchiladas Verdes", "categoria": "Plato Fuerte", "sabores": ["Picoso", "Ácido", "Cremoso", "Salado"], 
+    "ingredientes": ["Pollo", "Tortilla de maíz", "Salsa verde", "Queso", "Crema"], 
+    "preparacion": "Horneado", 
+    "restricciones": ["No vegano", "Contiene lácteos"], 
+    "popularidad": 0.78},
+
+    {"nombre": "Pozole Rojo", "categoria": "Plato Fuerte", "sabores": ["Salado", "Herbáceo", "Crocante", "Picante"], 
+    "ingredientes": ["Maíz", "Cerdo", "Chile guajillo", "Lechuga", "Rábano"], 
+    "preparacion": "Hervido", 
+    "restricciones": ["No vegano", "Libre de gluten"], 
+    "popularidad": 0.82},
+
+    {"nombre": "Pizza de Pepperoni", "categoria": "Plato Fuerte", "sabores": ["Salado", "Quesoso", "Graso", "Crujiente"], 
+    "ingredientes": ["Harina", "Queso mozzarella", "Pepperoni", "Salsa de tomate"], 
+    "preparacion": "Horneado", 
+    "restricciones": ["No vegano", "Contiene gluten", "Contiene lácteos"], 
+    "popularidad": 0.90},
+
+    {"nombre": "Hamburguesa Clásica", "categoria": "Plato Fuerte", "sabores": ["Jugoso", "Salado", "Dulce", "Umami"], 
+    "ingredientes": ["Pan de hamburguesa", "Carne de res", "Queso", "Lechuga", "Tomate"], 
+    "preparacion": "Asado", 
+    "restricciones": ["No vegano", "Contiene gluten", "Contiene lácteos"], 
+    "popularidad": 0.88},
+
+    {"nombre": "Sushi Roll California", "categoria": "Plato Fuerte", "sabores": ["Fresco", "Umami", "Suave", "Ligero"], 
+    "ingredientes": ["Arroz", "Aguacate", "Pepino", "Cangrejo", "Alga nori"], 
+    "preparacion": "Crudo", 
+    "restricciones": ["Contiene mariscos", "Libre de gluten"], 
+    "popularidad": 0.80},
+
+    {"nombre": "Pastel de Chocolate", "categoria": "Postre", "sabores": ["Dulce", "Cremoso", "Aterciopelado", "Amargo"], 
+    "ingredientes": ["Harina", "Cacao", "Azúcar", "Huevo", "Mantequilla"], 
+    "preparacion": "Horneado", 
+    "restricciones": ["No vegano", "Contiene gluten", "Contiene lácteos"], 
+    "popularidad": 0.87},
+
+    {"nombre": "Flan Napolitano", "categoria": "Postre", "sabores": ["Dulce", "Suave", "Cremoso", "Caramelo"], 
+    "ingredientes": ["Leche condensada", "Huevos", "Azúcar", "Vainilla"], 
+    "preparacion": "Horneado", 
+    "restricciones": ["No vegano", "Contiene lácteos"], 
+    "popularidad": 0.75},
+
+    {"nombre": "Helado de Vainilla", "categoria": "Postre", "sabores": ["Dulce", "Frio", "Cremoso", "Aromático"], 
+    "ingredientes": ["Leche", "Azúcar", "Vainilla"], 
+    "preparacion": "Congelado", 
+    "restricciones": ["No vegano", "Contiene lácteos"], 
+    "popularidad": 0.89},
+
+    {"nombre": "Pay de Limón", "categoria": "Postre", "sabores": ["Dulce", "Ácido", "Cremoso", "Refrescante"], 
+    "ingredientes": ["Galletas", "Leche condensada", "Jugo de limón", "Crema"], 
+    "preparacion": "Refrigerado", 
+    "restricciones": ["No vegano", "Contiene gluten", "Contiene lácteos"], 
+    "popularidad": 0.77},
+
+    {"nombre": "Churros con Azúcar", "categoria": "Postre", "sabores": ["Dulce", "Crujiente", "Aromático", "Caliente"], 
+    "ingredientes": ["Harina", "Azúcar", "Canela", "Aceite"], 
+    "preparacion": "Frito", 
+    "restricciones": ["No vegano", "Contiene gluten"], 
+    "popularidad": 0.84},
+
+    {"nombre": "Agua de Jamaica", "categoria": "Bebida", "sabores": ["Ácida", "Refrescante", "Dulce", "Fría"], 
+    "ingredientes": ["Flor de jamaica", "Azúcar", "Agua"], 
+    "preparacion": "Infusión", 
+    "restricciones": ["Vegano"], 
+    "popularidad": 0.76},
+
+    {"nombre": "Café Americano", "categoria": "Bebida", "sabores": ["Amargo", "Caliente", "Aromático", "Intenso"], 
+    "ingredientes": ["Café molido", "Agua"], 
+    "preparacion": "Infusión", 
+    "restricciones": ["Vegano"], 
+    "popularidad": 0.83},
+
+    {"nombre": "Chocolate Caliente", "categoria": "Bebida", "sabores": ["Dulce", "Cremoso", "Caliente", "Aromático"], 
+    "ingredientes": ["Leche", "Cacao", "Azúcar"], 
+    "preparacion": "Hervido", 
+    "restricciones": ["No vegano", "Contiene lácteos"], 
+    "popularidad": 0.81},
+
+    {"nombre": "Limonada Mineral", "categoria": "Bebida", "sabores": ["Ácida", "Refrescante", "Efervescente", "Fría"], 
+    "ingredientes": ["Limón", "Agua mineral", "Azúcar"], 
+    "preparacion": "Mezclado", 
+    "restricciones": ["Vegano"], 
+    "popularidad": 0.79},
+
+    {"nombre": "Guacamole con Totopos", "categoria": "Entrada", "sabores": ["Cremoso", "Salado", "Fresco", "Ácido"], 
+    "ingredientes": ["Aguacate", "Totopos", "Cebolla", "Jitomate", "Limón"], 
+    "preparacion": "Mezclado", 
+    "restricciones": ["Vegano", "Contiene gluten (totopos)"], 
+    "popularidad": 0.82},
+
+    {"nombre": "Queso Fundido con Chorizo", "categoria": "Entrada", "sabores": ["Quesoso", "Graso", "Salado", "Aromático"], 
+    "ingredientes": ["Queso", "Chorizo", "Tortilla de harina"], 
+    "preparacion": "Horneado", 
+    "restricciones": ["No vegano", "Contiene gluten", "Contiene lácteos"], 
+    "popularidad": 0.74},
+
+    {"nombre": "Nachos con Jalapeños", "categoria": "Entrada", "sabores": ["Crujiente", "Picoso", "Quesoso", "Salado"], 
+    "ingredientes": ["Totopos", "Queso", "Jalapeños"], 
+    "preparacion": "Horneado", 
+    "restricciones": ["No vegano", "Contiene lácteos", "Contiene gluten"], 
+    "popularidad": 0.80},
+
+    {"nombre": "Sopa de Tortilla", "categoria": "Entrada", "sabores": ["Picante", "Herbáceo", "Crujiente", "Caliente"], 
+    "ingredientes": ["Tortilla frita", "Chile pasilla", "Caldo de pollo", "Queso", "Crema"], 
+    "preparacion": "Hervido", 
+    "restricciones": ["No vegano", "Contiene gluten", "Contiene lácteos"], 
+    "popularidad": 0.79},
+
+    {"nombre": "Empanadas de Pollo", "categoria": "Entrada", "sabores": ["Crujiente", "Jugoso", "Salado", "Aromático"], 
+    "ingredientes": ["Harina", "Pollo", "Cebolla", "Aceite"], 
+    "preparacion": "Frito", 
+    "restricciones": ["No vegano", "Contiene gluten"], 
+    "popularidad": 0.76}
+]
+
