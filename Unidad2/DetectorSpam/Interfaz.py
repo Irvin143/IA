@@ -1,4 +1,7 @@
+import os
 import customtkinter as ctk
+
+from DetectarSpam import DetectorSpam
 
 from DetectarSpam import DetectorSpam
 
@@ -38,6 +41,8 @@ class Interfaz(ctk.CTk):
         self.spam_result.pack(pady=10)
 
         ctk.CTkButton(self, text="Detectar Spam", command=self.detect_spam).pack(pady=10)
+        # Cache del detector para no recargar el dataset en cada detección
+        self.detector = None
 
     def detect_spam(self):
         self.spam_result.configure(text=f"¿Es spam?:")
@@ -46,9 +51,19 @@ class Interfaz(ctk.CTk):
             self.spam_result.configure(text="Por favor ingrese al menos un dato del correo.")
             return
         # Aquí iría la lógica de detección de spam
-        detector = DetectorSpam(r"C:\VisualStudio\Python\MateriaIA\IA\Unidad2\DetectorSpam\train.csv")
+        dataset_path = os.path.join(os.path.dirname(__file__), "train.csv")
+        if not os.path.exists(dataset_path):
+            self.spam_result.configure(text=f"Archivo de datos no encontrado: {dataset_path}")
+            return
+        if self.detector is None:
+            try:
+                self.detector = DetectorSpam(dataset_path)
+            except Exception as e:
+                self.spam_result.configure(text=f"Error al cargar dataset: {e}")
+                return
+
         email_text = f"{self.sender_entry.get()}, {self.subject_entry.get()}, {self.email_content.get('1.0', 'end-1c')}"
-        resultado = detector.detectar(email_text, 1 if self.razonamiento_var.get() == "no_monotono" else 2)
+        resultado = self.detector.detectar(email_text, 1 if self.razonamiento_var.get() == "no_monotono" else 2)
         self.spam_result.configure(text=f"¿Es spam?: {resultado}")
 
 
