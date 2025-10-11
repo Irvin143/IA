@@ -28,7 +28,7 @@ class DetectorSpam:
         total_no_spam = frecuencia_no_spam.sum()
         self.P_caracteristicas_spam = frecuencia_spam / total_spam
         self.P_caracteristicas_no_spam = frecuencia_no_spam / total_no_spam
-# ...existing code...
+
     #Funcion que preprocesa el texto para eliminar stopwords y lematizar, y asi dejar solo las palabras importantes
     def preProcesar(self, texto):
         texto = texto.str.replace("[^a-z0-9]", " ")

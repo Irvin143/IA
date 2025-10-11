@@ -34,7 +34,7 @@ class Interfaz(ctk.CTk):
         # Radio buttons para seleccionar el tipo de razonamiento
         self.razonamiento_var = ctk.StringVar(value="monotono")
         ctk.CTkLabel(self, text="Tipo de razonamiento:", font=("Arial", 14)).pack(pady=5)
-        ctk.CTkRadioButton(self, text="Monótono", variable=self.razonamiento_var, value="monotono").pack(pady=2)
+        ctk.CTkRadioButton(self, text="Probabilistico", variable=self.razonamiento_var, value="monotono").pack(pady=2)
         ctk.CTkRadioButton(self, text="No monótono", variable=self.razonamiento_var, value="no_monotono").pack(pady=2)
 
         self.spam_result = ctk.CTkLabel(self, text="¿Es spam?:", font=("Arial", 14))
