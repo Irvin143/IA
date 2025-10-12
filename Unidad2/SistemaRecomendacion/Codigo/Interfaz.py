@@ -104,6 +104,8 @@ class App(ctk.CTk):
         """Obtiene todas las selecciones de ambos modos"""
         gustos = {}
         restricciones = {}
+        dieteticos = {}
+        ingredientes = {}
         
         # Obtener gustos
         for selector in self.selectores_gustos:
@@ -114,11 +116,21 @@ class App(ctk.CTk):
         for selector in self.selectores_restricciones:
             if selector.selected:
                 restricciones = list(selector.selected)
+
+        for selector in self.selectores_dieteticos:
+            if selector.selected:
+                dieteticos = list(selector.selected)
+
+        for selector in self.selectores_ingredientes:
+            if selector.selected:
+                ingredientes = list(selector.selected)
         
         print("Gustos:", gustos)
         print("Restricciones:", restricciones)
+        print("Dieteticos:", dieteticos)
+        print("Ingredientes:", ingredientes)
         
-        self.tabla_recomendacion.llenar_tabla(recomendarPlatillos(gustos, restricciones))
+        self.tabla_recomendacion.llenar_tabla(recomendarPlatillos(gustos, restricciones, dieteticos, ingredientes))
 
     
 if __name__ == "__main__":

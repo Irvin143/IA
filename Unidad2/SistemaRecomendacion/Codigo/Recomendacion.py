@@ -1,9 +1,9 @@
 import json
-def recomendarPlatillos(lista_gustos, lista_restricciones):
+def recomendarPlatillos(lista_gustos, lista_restricciones,lista_dieteticos=[], lista_ingredientes=[]):
     with open("C:\\VisualStudio\\Python\\MateriaIA\\IA\\Unidad2\\SistemaRecomendacion\\Json\\Platillos.json", "r", encoding="utf-8") as f:
         diccionario_platillos = json.load(f)
 
-    probs_dict = probabilidadesPlatillos(lista_gustos, lista_restricciones, diccionario_platillos)
+    probs_dict = probabilidadesPlatillos(lista_gustos, lista_restricciones, diccionario_platillos, lista_dieteticos, lista_ingredientes)
 
     # Si quieres todos los platillos que empatan en la probabilidad máxima:
     if probs_dict:
@@ -66,31 +66,69 @@ def platillosGanadores(diccionario_platillos, ganadores):
     print("Platillos ganadores (detalles):", resultados)
     return resultados
 
-def probabilidadesPlatillos(lista_gustos, lista_restricciones, diccionario_platillos):
+def probabilidadesPlatillos(lista_gustos, lista_restricciones, diccionario_platillos, lista_dieteticos=[], lista_ingredientes=[]):
+    """
+    Calcula una probabilidad combinada por platillo integrando:
+      - coincidencias de 'sabores' (gustos vs restricciones)
+      - coincidencias con etiquetas 'dieteticos'
+      - coincidencias con 'ingredientes' solicitados
+    Devuelve un dict nombre -> (probabilidad_normalizada, categoria)
+    """
     probabilidades_platillos = {}
     total_general = 0.0
 
-    # Primera pasada: calcular score bruto por platillo y acumular total general
+    # pesos para combinar las tres señales (ajustables)
+    w_sabores = 0.6
+    w_dieteticos = 0.4
+    w_ingredientes = 0.5
+
     for platillo in diccionario_platillos:
         nombre = platillo.get("nombre", "")
         categoria = platillo.get("categoria", "")
+
         sabores = platillo.get("sabores", []) or []
+        diet_tags = platillo.get("restricciones", []) or []
+        ingredientes_plat = platillo.get("ingredientes", []) or []
 
-        prob_estar = sum(1 for s in sabores if s in lista_gustos)
-        prob_no_estar = sum(1 for s in sabores if s in lista_restricciones)
-        total_ingredientes = len(sabores) or 1  # evita división por cero
+        # --- score sabores (gustos vs restricciones) ---
+        match_gustos = sum(1 for s in sabores if s in lista_gustos)
+        match_restr = sum(1 for s in sabores if s in lista_restricciones)
+        denom_sabores = len(sabores) or 1
+        score_sabores = max((match_gustos - match_restr) / denom_sabores, 0.0)
 
-        prob = max((prob_estar - prob_no_estar) / total_ingredientes, 0.0)
-        probabilidades_platillos[nombre] = {"probabilidad": float(prob), "categoria": categoria}
-        total_general += prob
+        # --- score dieteticos: fracción de dieteticos deseados presentes ---
+        if lista_dieteticos:
+            match_diet = sum(1 for d in diet_tags if d in lista_dieteticos)
+            # normalizar respecto a lo solicitado por el usuario (lista_dieteticos)
+            score_dieteticos = match_diet / len(lista_dieteticos)
+        else:
+            score_dieteticos = 0.0
 
-    # Segunda pasada: normalizar respecto al total general (no por categoría)
+        # --- score ingredientes: fracción de ingredientes deseados presentes ---
+        if lista_ingredientes:
+            match_ing = sum(1 for ing in ingredientes_plat if ing in lista_ingredientes)
+            # normalizar respecto a lo solicitado por el usuario (lista_ingredientes)
+            score_ingredientes = match_ing / len(lista_ingredientes)
+        else:
+            score_ingredientes = 0.0
+
+        # combinar las señales con pesos y asegurar rango [0,1]
+        prob_combinada = (
+            w_sabores * score_sabores
+            + w_dieteticos * score_dieteticos
+            + w_ingredientes * score_ingredientes
+        )
+        prob_combinada = max(min(prob_combinada, 1.0), 0.0)
+
+        probabilidades_platillos[nombre] = {"probabilidad": float(prob_combinada), "categoria": categoria}
+        total_general += prob_combinada
+
+    # Normalizar respecto al total general (si total_general == 0 quedan ceros)
     probabilidades_norm = {}
     for nombre, meta in probabilidades_platillos.items():
         categoria = meta["categoria"]
         prob = meta["probabilidad"]
         prob_norm = (prob / total_general) if total_general > 0 else 0.0
-        # guardamos una tupla (probabilidad_normalizada, categoria)
         probabilidades_norm[nombre] = (prob_norm, categoria)
 
     return probabilidades_norm
