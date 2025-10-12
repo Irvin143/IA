@@ -31,7 +31,7 @@ class FrameIngredientes(ctk.CTkFrame):
             self.buttons[sabor] = btn
 
     def toggle(self, opt):
-        if self.mode == "Gustos":
+        if "Gustos" in self.mode:
             normal_color = "#2b8b85"
             selected_color = "#3d5c8d"
         else:  # restricciones
