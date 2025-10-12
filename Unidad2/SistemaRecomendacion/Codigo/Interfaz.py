@@ -1,13 +1,12 @@
 import customtkinter as ctk
 import json
+from pathlib import Path
 
 try:
-    # Preferred: relative imports when running as a package
     from .Frame import FrameIngredientes
     from .Recomendacion import recomendarPlatillos
     from .TablaRecomendacion import TablaRecomendacion
 except ImportError:
-    # Fallback: allow running the module directly (script mode)
     import sys
     import os
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -25,9 +24,13 @@ class App(ctk.CTk):
         self.title("Sistema de Recomendación de Restaurante")
         self.geometry("700x700")
         
-        with open("C:\\VisualStudio\\Python\\MateriaIA\\IA\\Unidad2\\SistemaRecomendacion\\Json\\Sabores.json", "r", encoding="utf-8") as f:
+        base_json_dir = Path(__file__).resolve().parent.parent / "Json"
+        sabores_path = base_json_dir / "Sabores.json"
+        ingredientes_path = base_json_dir / "Ingredientes.json"
+
+        with open(sabores_path, "r", encoding="utf-8") as f:
             self.sabores = json.load(f)
-        with open("C:\\VisualStudio\\Python\\MateriaIA\\IA\\Unidad2\\SistemaRecomendacion\\Json\\Ingredientes.json", "r", encoding="utf-8") as f:
+        with open(ingredientes_path, "r", encoding="utf-8") as f:
             self.ingredientes = json.load(f)
 
         # Frame principal
@@ -60,7 +63,6 @@ class App(ctk.CTk):
         selector = FrameIngredientes(self.frame_gustos, self.sabores, mode="Gustos")
         selector.pack(fill="x", pady=10, padx=10)
         self.selectores_gustos.append(selector)
-
 
         #Crear apartado de ingredientes
         self.selectores_ingredientes = []
