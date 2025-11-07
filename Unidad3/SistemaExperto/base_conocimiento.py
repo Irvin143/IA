@@ -247,7 +247,7 @@ INFORMACION_ENFERMEDADES = {
         'nombre': 'Neumonía',
         'descripcion': 'Infección que inflama los sacos aéreos de uno o ambos pulmones',
         'hallazgos': 'Crepitantes localizados, disminución del murmullo vesicular, matidez a la percusión, egofonía, presencia de infiltrado en radiografía',
-        'recomendacion': '*** URGENTE: Acudir INMEDIATAMENTE al médico o servicio de urgencias',
+        'recomendacion': 'URGENTE: Acudir INMEDIATAMENTE al médico o servicio de urgencias',
         'urgencia': 'URGENTE'
     },
     'covid19': {
@@ -289,7 +289,7 @@ INFORMACION_ENFERMEDADES = {
         'nombre': 'Tuberculosis Pulmonar',
         'descripcion': 'Infección bacteriana crónica causada por Mycobacterium tuberculosis',
         'hallazgos': 'Crepitantes en zonas apicales del pulmón, pérdida de peso, adenopatías, cavitaciones visibles en radiografía o TAC',
-        'recomendacion': '*** URGENTE: Consultar INMEDIATAMENTE. Requiere tratamiento prolongado específico',
+        'recomendacion': 'URGENTE: Consultar INMEDIATAMENTE. Requiere tratamiento prolongado específico',
         'urgencia': 'URGENTE'
     }
 }

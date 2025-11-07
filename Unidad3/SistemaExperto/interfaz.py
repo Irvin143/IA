@@ -3,12 +3,6 @@ from tkinter import ttk
 from tkinter import scrolledtext
 
 class Interfaz:
-    """Interfaz gráfica con Tkinter para el sistema experto.
-    
-    Ahora incluye lógica para OMITIR preguntas redundantes basándose en 
-    respuestas previas del usuario.
-    """
-
     def __init__(self, motor, sintomas_disponibles, factores_riesgo_disponibles, reglas_omision=None):
         self.motor = motor
         self.sintomas_disponibles = sintomas_disponibles
@@ -24,7 +18,7 @@ class Interfaz:
 
         # Datos recogidos
         self.datos_usuario = []
-        self.preguntas_omitidas = set()  # Preguntas que NO se harán
+        self.preguntas_omitidas = set()  # Preguntas que no se haran
         self.index_pregunta = 0
 
         # Tk root y frames
@@ -153,7 +147,7 @@ class Interfaz:
         sintomas_ingresados = [d for d in datos if d in self.sintomas_disponibles]
         factores_ingresados = [d for d in datos if d in self.factores_riesgo_disponibles]
 
-        caja.insert('end', f"Total de datos proporcionados: {len(datos)}\n")
+        """caja.insert('end', f"Total de datos proporcionados: {len(datos)}\n")
         caja.insert('end', f" - Síntomas: {len(sintomas_ingresados)}\n")
         caja.insert('end', f" - Factores de riesgo: {len(factores_ingresados)}\n")
         caja.insert('end', f" - Preguntas omitidas (por inferencia): {len(self.preguntas_omitidas)}\n\n")
@@ -170,9 +164,7 @@ class Interfaz:
             for fct in factores_ingresados:
                 nombre_legible = self.factores_riesgo_disponibles.get(fct, fct).replace('¿', '').replace('?', '')
                 caja.insert('end', f"  - {nombre_legible}\n")
-            caja.insert('end', "\n")
-
-        caja.insert('end', "Evaluando reglas de producción...\n\n")
+            caja.insert('end', "\n") """
 
         # Realizar diagnóstico llamando al motor
         try:
@@ -189,15 +181,8 @@ class Interfaz:
                 info = self.motor.obtener_info_enfermedad(enfermedad)
                 fc = datos_calc.get('factor_certeza', 0.0)
                 probabilidad = datos_calc.get('probabilidad', 0.0)
-                simbolo_urgencia = {
-                    'URGENTE': '[!!!]',
-                    'ALTA': '[!!]',
-                    'MEDIA': '[!]',
-                    'BAJA': '[i]'
-                }
-                simbolo = simbolo_urgencia.get(info.get('urgencia', ''), '[i]')
-
-                caja.insert('end', f"{simbolo} {i}. {info.get('nombre','').upper()}\n")
+    
+                caja.insert('end', f"{i} {info.get('nombre','').upper()}\n")
                 caja.insert('end', f"   Factor de Certeza: {fc:.2f}\n")
                 caja.insert('end', f"   Probabilidad: {probabilidad:.1f}%\n")
                 caja.insert('end', f"   Nivel de urgencia: {info.get('urgencia','')}\n")
@@ -211,7 +196,6 @@ class Interfaz:
                 caja.insert('end', "\n")
 
                 caja.insert('end', f"   Descripción:\n      {info.get('descripcion','')}\n\n")
-                caja.insert('end', f"   Hallazgos típicos:\n      {info.get('hallazgos','')}\n\n")
                 caja.insert('end', f"   Recomendación:\n      {info.get('recomendacion','')}\n\n")
 
         caja.configure(state='disabled')

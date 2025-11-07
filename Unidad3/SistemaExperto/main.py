@@ -7,6 +7,5 @@ def main():
     interfaz = Interfaz(motor, SINTOMAS_DISPONIBLES, FACTORES_RIESGO_DISPONIBLES, REGLAS_OMISION)
     interfaz.ejecutar()
 
-
 if __name__ == "__main__":
     main()
