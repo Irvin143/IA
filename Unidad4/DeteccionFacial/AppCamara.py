@@ -1,49 +1,55 @@
 import cv2
 import numpy as np
 import tensorflow as tf
+from collections import deque, Counter
 
-# Cargar modelo entrenado
-modelo = tf.keras.models.load_model("IA/Unidad4/DeteccionFacial/modelo/mejor_modelo.keras")
+# Cargar modelo
+model = tf.keras.models.load_model("IA/Unidad4/DeteccionFacial/modelo_emociones.h5")
 
-clases = ['enojo', 'miedo', 'feliz', 'triste', 'sorprendido']
+# Diccionario de emociones
+emociones = ["angry", "happy", "neutral", "sad"]
 
-# Detector de rostros
-face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+# Buffer para suavizar predicciones (últimas 10)
+prediction_buffer = deque(maxlen=10)
 
-# Captura de video
+# Cargar detector de rostro
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+
+# Iniciar cámara
 cap = cv2.VideoCapture(0)
 
-while True: 
+while True:
     ret, frame = cap.read()
     if not ret:
         break
 
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+    gris = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    rostros = face_cascade.detectMultiScale(gris, 1.3, 5)
 
-    for (x, y, w, h) in faces:
-        rostro = gray[y:y+h, x:x+w]
+    for (x, y, w, h) in rostros:
+        # Dibujar recuadro
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 255, 255), 2)
+
+        rostro = gris[y:y+h, x:x+w]
         rostro = cv2.resize(rostro, (48, 48))
-        rostro = rostro / 255.0
-        rostro = np.expand_dims(rostro, axis=(0, -1))
+        rostro = rostro.reshape(1, 48, 48, 1) / 255.0
 
-        pred = modelo.predict(rostro, verbose=0)
-        clase = np.argmax(pred)
-        confianza = pred[0][clase]
+        pred = model.predict(rostro, verbose=0)
+        emocion = emociones[np.argmax(pred)]
 
-        # Filtro para mostrar solo las predicciones confiables
-        if confianza > 0.5:  
-            etiqueta = f'{clases[clase]} ({confianza:.2f})'
-        else:
-            etiqueta = "Inseguro"
+        # Guardar emoción en buffer
+        prediction_buffer.append(emocion)
 
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-        cv2.putText(frame, etiqueta, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.9, (0, 255, 0), 2)
+        # Emoción más repetida en últimas N predicciones
+        emocion_estable = Counter(prediction_buffer).most_common(1)[0][0]
 
-    cv2.imshow("Reconocimiento de Expresiones", frame)
+        # Colocar texto más estable
+        cv2.putText(frame, emocion_estable, (x, y - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.9, (255, 255, 255), 2)
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    cv2.imshow("Detector de emociones", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 cap.release()
